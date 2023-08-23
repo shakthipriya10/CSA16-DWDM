@@ -1,0 +1,41 @@
+install.packages("arules")  # Install the arules package
+library(arules)  # Load the arules package
+data <- data.frame(
+  TID = c("T100", "T200", "T300", "T400", "T500"),
+  items = list(
+    c("M", "O", "N", "K", "E", "Y"),
+    c("D", "O", "N", "K", "E", "Y"),
+    c("M", "A", "K", "E"),
+    c("M", "U", "C", "K", "Y"),
+    c("C", "O", "O", "K", "I", "E")
+  ))
+# Convert the items column to a transaction format
+transactions <- as(data$items, "transactions")
+
+# Perform Apriori
+apriori_rules <- apriori(transactions, parameter = list(support = 0.2, confidence = 0.6))
+
+# Perform FP-Growth
+fp_growth_rules <- fpgrowth(transactions, parameter = list(support = 0.2, confidence = 0.6))
+# Frequent itemsets from Apriori
+frequent_itemsets_apriori <- inspect(apriori_rules)
+
+# Frequent itemsets from FP-Growth
+frequent_itemsets_fpgrowth <- inspect(fp_growth_rules)
+
+# Print the results
+print("Frequent Itemsets from Apriori:")
+print(frequent_itemsets_apriori)
+
+print("Frequent Itemsets from FP-Growth:")
+print(frequent_itemsets_fpgrowth)
+
+# Specify the metarule
+metarule <- "buys(X, item1) & buys(X, item2) => buys(X, item3)"
+
+# Generate rules using the metarule
+association_rules <- apriori(transactions, parameter = list(support = 0.2, confidence = 0.6), appearance = list(lhs = metarule))
+
+# Print the generated rules
+print("Association Rules Matching the Metarule:")
+print(association_rules)
