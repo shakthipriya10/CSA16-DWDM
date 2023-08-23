@@ -1,0 +1,13 @@
+num_vegetarian <- sum(vegetarian_status == "yes")
+num_non_vegetarian <- sum(vegetarian_status == "no")
+
+print(paste("Number of Vegetarian Individuals:", num_vegetarian))
+print(paste("Number of Non-Vegetarian Individuals:", num_non_vegetarian))
+if (num_vegetarian > num_non_vegetarian) {
+  print("Vegetarian individuals have a greater count.")
+} else if (num_non_vegetarian > num_vegetarian) {
+  print("Non-vegetarian individuals have a greater count.")
+} else {
+  print("The counts of vegetarian and non-vegetarian individuals are equal.")
+}
+
